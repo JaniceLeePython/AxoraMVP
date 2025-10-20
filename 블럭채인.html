@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)file:///C:/Users/user/Downloads/blockchain_log_ko.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axora 트레이서빌리티 플랫폼 — 블록체인 검증 로그</title>
+  <style>
+    :root{
+      --bg:#0B132B;--panel:#1E293B;--panel2:#0F172A;--header:#1C2541;--text:#E5E7EB;--muted:#A8B0BD;--accent:#00FFAE;--border:#243447;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .header{display:flex;align-items:center;justify-content:space-between;background:var(--header);padding:16px 24px;border-bottom:1px solid var(--border)}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:800;color:var(--accent)}
+    .logo{width:10px;height:10px;border:2px solid var(--accent);border-radius:2px;box-shadow:0 0 12px var(--accent);transform:rotate(45deg)}
+    main{max-width:1100px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:1fr 360px;gap:16px}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px}
+    .panel h2{margin:0 0 8px 0;color:var(--accent)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}
+    th{color:var(--muted);font-weight:600}
+    .chip{display:inline-block;background:rgba(0,255,174,.12);border:1px solid rgba(0,255,174,.35);color:var(--accent);padding:2px 8px;border-radius:999px;font-size:12px}
+    .side{background:var(--panel2);border:1px solid var(--border);border-radius:16px;padding:20px}
+    .btn{background:var(--accent);color:#061015;font-weight:800;border:none;padding:10px 14px;border-radius:10px;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><span class="logo"></span> Axora 트레이서빌리티 플랫폼</div>
+    <div class="chip">블록체인 검증 로그</div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>블록 목록</h2>
+      <table id="blocks">
+        <thead>
+          <tr><th>블록</th><th>타임스탬프</th><th>트랜잭션 해시</th><th>이벤트</th><th>데이터</th></tr>
+        </thead>
+        <tbody>
+          <!-- rows will be injected -->
+        <tr><td>#102340</td><td>2025-10-20 19:39:29</td><td>0x5009c184</td><td>업로드</td><td>제품: K-스틸 열연코일, HS 7208.38, CO₂ 1.2 t</td></tr><tr><td>#102341</td><td>2025-10-20 19:39:29</td><td>0xcbca5420</td><td>검증</td><td>검증기관: KTR · 방법: MRV-2025</td></tr><tr><td>#102342</td><td>2025-10-20 19:39:29</td><td>0x72e1a260</td><td>해시</td><td>SHA-256: 0x9f…d4c</td></tr><tr><td>#102343</td><td>2025-10-20 19:39:29</td><td>0x229cd480</td><td>앵커</td><td>이더리움 테스트넷 · 블록: 1872451</td></tr></tbody>
+      </table>
+      <p class="muted">참고: 본 페이지는 선적 데이터가 변경 불가능한 형태로 기록되는 방식을 시연합니다.</p>
+      <button class="btn" onclick="window.history.back()">◀ 대시보드로 돌아가기</button>
+    </section>
+
+    <aside class="side">
+      <h3 style="margin:0 0 8px 0;color:var(--accent)">트레이스 요약</h3>
+      <div id="traceBox" class="muted">트레이스 ID: AXO936-SOUT-GERM</div>
+      <div style="margin-top:10px" class="muted">검증기관: KTR 시험인증</div>
+      <div style="margin:10px 0" class="muted">내재 CO₂: 1.2 t CO₂e</div>
+      <button class="btn" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+    </aside>
+  </main>
+
+  <script>
+    function pad(n){return n.toString().padStart(2,'0')}
+    function ts(){
+      const d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds())
+    }
+    const tbody = document.querySelector('#blocks tbody');
+    const events = [
+      {evt:'업로드', data:'제품: K-스틸 열연코일, HS 7208.38, CO₂ 1.2 t'},
+      {evt:'검증', data:'검증기관: KTR · 방법: MRV-2025'},
+      {evt:'해시', data:'SHA-256: 0x9f…d4c'},
+      {evt:'앵커', data:'이더리움 테스트넷 · 블록: 1872451'}
+    ];
+    let blockNum = 102340;
+    events.forEach((e,i)=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>#${blockNum+i}</td><td>${ts()}</td><td>0x${(Math.random()*1e18>>>0).toString(16)}</td><td>${e.evt}</td><td>${e.data}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    const id = localStorage.getItem('axora_trace_id') || 'AXO123-KR-DE';
+    document.getElementById('traceBox').textContent = '트레이스 ID: ' + id;
+  </script>
+
+
+</body></html>

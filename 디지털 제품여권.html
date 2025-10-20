@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- saved from url=(0125)file:///C:/Users/user/AppData/Local/Temp/a43deb56-dac4-4ea9-9541-102e1f52cfc3_Axora_MVP_KR_Full.zip.fc3/importer_view_ko.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axora 트레이서빌리티 플랫폼 — 수입자 뷰 (디지털 제품여권)</title>
+  <style>
+    :root{
+      --bg:#0B132B;
+      --panel:#1E293B;
+      --accent:#00FFAE;
+      --text:#E5E7EB;
+      --muted:#A8B0BD;
+      --border:#243447;
+    }
+    body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);}
+    .header{display:flex;align-items:center;justify-content:space-between;background:#1C2541;padding:16px 24px;border-bottom:1px solid var(--border);}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:800;color:var(--accent);}
+    .logo{width:10px;height:10px;border:2px solid var(--accent);border-radius:2px;box-shadow:0 0 12px var(--accent);transform:rotate(45deg)}
+    .content{max-width:900px;margin:32px auto;padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:16px;}
+    h1{color:var(--accent);margin-top:0;}
+    .info{line-height:1.8;font-size:15px;}
+    .section{margin-bottom:24px;}
+    .passport{background:#0F172A;border:1px solid var(--border);border-radius:10px;padding:16px;}
+    .btn{background:var(--accent);color:#061015;font-weight:700;border:none;padding:12px 16px;border-radius:10px;cursor:pointer;}
+    .muted{color:var(--muted);font-size:13px;}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><span class="logo"></span> Axora 트레이서빌리티 플랫폼</div>
+    <div class="muted">수입자 뷰 (디지털 제품여권)</div>
+  </header>
+
+  <main class="content">
+    <h1>디지털 제품여권 (Digital Product Passport)</h1>
+    <div class="section passport">
+      <div class="info">
+        <strong>트레이스 ID:</strong> <span id="traceId">AXO123-KR-DE</span><br>
+        <strong>제품명:</strong> K-스틸 열연코일<br>
+        <strong>HS 코드:</strong> 7208.38<br>
+        <strong>원산지:</strong> 대한민국<br>
+        <strong>검증기관:</strong> KTR 시험인증<br>
+        <strong>내재 CO₂:</strong> 1.2 t CO₂e<br>
+        <strong>운송 방법:</strong> 해상<br>
+        <strong>도착지:</strong> 독일(EU)<br>
+        <strong>검증 상태:</strong> ✅ 완료<br>
+        <strong>검증 날짜:</strong> <span id="verifyDate">2025-10-20</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 style="color:var(--accent)">환경 정보 요약</h2>
+      <div class="passport">
+        <ul>
+          <li>배출량 검증 기준: MRV-2025 표준</li>
+          <li>에너지 원천: 수소 혼합제철공정 (탄소 저감형)</li>
+          <li>원자재 추적: 100% 공급망 인증 완료</li>
+          <li>CBAM 보고서 제출 상태: 제출 완료</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="btn" onclick="goBlockchain()">🔗 블록체인 기록 보기</button>
+      <button class="btn" style="margin-left:10px;" onclick="window.print()">🖨 인쇄 / PDF 저장</button>
+    </div>
+  </main>
+
+  <script>
+    function pad(n){return n.toString().padStart(2,'0')}
+    const d=new Date();
+    document.getElementById('verifyDate').textContent =
+      d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+    const id = localStorage.getItem('axora_trace_id') || 'AXO123-KR-DE';
+    document.getElementById('traceId').textContent = id;
+    function goBlockchain(){ window.location.href = 'blockchain_log_ko.html'; }
+  </script>
+
+
+</body></html>

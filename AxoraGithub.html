@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///C:/Users/user/Downloads/exporter_dashboard_ko.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axora 트레이서빌리티 플랫폼 — 수출자 대시보드</title>
+  <style>
+    :root{
+      --bg:#0B132B;
+      --panel:#1E293B;
+      --panel2:#0F172A;
+      --nav:#16213E;
+      --header:#1C2541;
+      --text:#E5E7EB;
+      --muted:#A8B0BD;
+      --accent:#00FFAE;
+      --accentText:#061015;
+      --border:#243447;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    .header{display:flex;align-items:center;justify-content:space-between;background:var(--header);padding:16px 24px;border-bottom:1px solid var(--border);position:sticky;top:0}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:800;color:var(--accent);letter-spacing:.3px}
+    .brand .logo{width:10px;height:10px;border:2px solid var(--accent);border-radius:2px;box-shadow:0 0 12px var(--accent);transform:rotate(45deg)}
+    .wrap{display:grid;grid-template-columns:220px 1fr 360px;gap:16px;padding:16px;max-width:1400px;margin:0 auto;}
+    .side{background:var(--nav);border:1px solid var(--border);border-radius:14px;padding:16px;height:calc(100vh - 96px);position:sticky;top:80px;}
+    .side h3{margin:0 0 8px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+    .menu a{display:block;padding:10px 12px;margin:6px 0;border-radius:10px;color:var(--text);text-decoration:none}
+    .menu a.active,.menu a:hover{background:linear-gradient(90deg,rgba(0,255,174,.18),rgba(0,0,0,0));color:#fff}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px}
+    .panel h2{margin:0 0 12px 0;color:var(--accent)}
+    .form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    label{font-size:13px;color:var(--muted)}
+    input,select{background:#0f172a;border:1px solid var(--border);color:var(--text);padding:12px;border-radius:10px;outline:none}
+    .full{grid-column:1 / -1}
+    .btn{background:var(--accent);color:var(--accentText);font-weight:800;border:none;padding:12px 16px;border-radius:12px;cursor:pointer;margin-top:8px}
+    .btn:active{transform:translateY(1px)}
+    .summary{background:var(--panel2);border:1px solid var(--border);border-radius:16px;padding:20px}
+    .kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0 6px 0}
+    .kpi .box{background:#0b1224;border:1px dashed var(--border);border-radius:10px;padding:12px}
+    .footer{color:var(--muted);font-size:12px;text-align:center;padding:16px;border-top:1px solid var(--border);margin-top:16px}
+    .badge{display:inline-block;background:rgba(0,255,174,.12);border:1px solid rgba(0,255,174,.35);color:var(--accent);padding:4px 8px;border-radius:999px;font-size:12px}
+    @media (max-width:1100px){.wrap{grid-template-columns:1fr;}.side{position:relative;height:auto} .summary{order:3}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><span class="logo"></span> Axora 트레이서빌리티 플랫폼</div>
+    <div class="badge">수출자 대시보드</div>
+  </header>
+
+  <main class="wrap">
+    <aside class="side">
+      <h3>메뉴</h3>
+      <nav class="menu">
+        <a href="file:///C:/Users/user/Downloads/exporter_dashboard_ko.html#" class="active">🏠 홈</a>
+        <a href="file:///C:/Users/user/Downloads/exporter_dashboard_ko.html#">📦 내 선적</a>
+        <a href="file:///C:/Users/user/Downloads/exporter_dashboard_ko.html#">⬆️ 데이터 업로드</a>
+        <a href="file:///C:/Users/user/Downloads/exporter_dashboard_ko.html#">⚙️ 설정</a>
+      </nav>
+    </aside>
+
+    <section class="panel">
+      <h2>선적 데이터 업로드</h2>
+      <form class="form" onsubmit="event.preventDefault(); generateTrace();">
+        <div class="field">
+          <label>제품명</label>
+          <input id="product" placeholder="K-스틸 열연코일" value="K-스틸 열연코일">
+        </div>
+        <div class="field">
+          <label>HS 코드</label>
+          <input id="hs" placeholder="7208.38" value="7208.38">
+        </div>
+        <div class="field">
+          <label>원산지 국가</label>
+          <input id="origin" placeholder="대한민국" value="대한민국">
+        </div>
+        <div class="field">
+          <label>도착지</label>
+          <input id="dest" placeholder="독일(EU)" value="독일(EU)">
+        </div>
+        <div class="field">
+          <label>CO₂ 배출량 (t CO₂e)</label>
+          <input id="co2" placeholder="1.2" value="1.2">
+        </div>
+        <div class="field">
+          <label>운송 방법</label>
+          <select id="transport">
+            <option>해상</option>
+            <option>항공</option>
+            <option>철도</option>
+            <option>도로</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>검증 기관</label>
+          <input id="verifier" placeholder="KTR 시험인증" value="KTR 시험인증">
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit">업로드 및 트레이스 ID 생성</button>
+        </div>
+      </form>
+      <div class="footer">Tip: 실제 HS 코드와 검증기관명을 사용하면 신뢰도가 올라갑니다.</div>
+    </section>
+
+    <aside class="summary">
+      <h3 style="margin:0 0 8px 0;color:var(--accent)">선적 요약 미리보기</h3>
+      <div id="summaryText" style="white-space:pre-line;line-height:1.6">
+트레이스 ID: —
+상태: 검증 대기
+마지막 업데이트: <span id="dateNow">2025-10-20 19:38</span>
+예상 탄소비용: €42
+      </div>
+      <div class="kpi">
+        <div class="box">
+          <div style="font-size:12px;color:var(--muted)">내재 CO₂</div>
+          <div style="font-size:18px;font-weight:800">1.2 t CO₂e</div>
+        </div>
+        <div class="box">
+          <div style="font-size:12px;color:var(--muted)">검증기관</div>
+          <div style="font-size:18px;font-weight:800">KTR</div>
+        </div>
+      </div>
+      <button class="btn" onclick="goLog()">블록체인에서 보기</button>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    © 2025 Axora Traceability Inc. | 지속가능 무역을 위한 블록체인 기반
+  </footer>
+
+  <script>
+    function pad(n){return n.toString().padStart(2,'0')}
+    function today(){
+      const d=new Date();
+      return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes())
+    }
+    document.getElementById('dateNow').textContent = today();
+
+    function slug(s){return (s||'').toUpperCase().replace(/[^A-Z0-9]+/g,'').slice(0,4)}
+    function generateTrace(){
+      const origin = slug(document.getElementById('origin').value||'KR');
+      const dest = slug(document.getElementById('dest').value||'EU');
+      const id = "AXO"+Math.floor(100+Math.random()*900)+"-"+origin+"-"+dest;
+      const status = "제출됨 · 검증 대기";
+      const summary = `트레이스 ID: ${id}
+상태: ${status}
+마지막 업데이트: ${today()}
+예상 탄소비용: €42`;
+      document.getElementById('summaryText').innerText = summary;
+      localStorage.setItem('axora_trace_id', id);
+    }
+    function goLog(){ window.location.href = "blockchain_log_ko.html"; }
+  </script>
+
+
+</body></html>
